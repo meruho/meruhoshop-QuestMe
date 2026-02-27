@@ -1,0 +1,5 @@
+/* App.css - 기본 리셋 (index.css의 Tailwind와 함께 사용) */
+#root {
+  width: 100%;
+  min-height: 100vh;
+}
