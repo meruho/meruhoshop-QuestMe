@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 
-// 미루 캐릭터 (픽셀 아트 SVG)
+// 미루 캐릭터 (픽셀 아트 SVG) v1.1
 const MiruPixel = () => (
   <svg width="32" height="32" viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg" style={{ imageRendering: 'pixelated' }}>
     {/* 머리 */}
