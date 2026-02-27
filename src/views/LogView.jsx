@@ -35,12 +35,15 @@ const TYPE_STYLES = {
 // 주간 통계 계산
 function calcWeeklyStats(logs) {
   const now = new Date();
-  const weekAgo = new Date(now);
-  weekAgo.setDate(now.getDate() - 6);
+  const dayOfWeek = now.getDay(); // 0=일, 1=월 ... 6=토
+  const daysFromMonday = dayOfWeek === 0 ? 6 : dayOfWeek - 1;
+  const monday = new Date(now);
+  monday.setDate(now.getDate() - daysFromMonday);
+  monday.setHours(0, 0, 0, 0);
 
   const days = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(weekAgo);
-    d.setDate(weekAgo.getDate() + i);
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
     return d.toDateString();
   });
 
