@@ -47,8 +47,8 @@ function HabitItem({ habit, onComplete }) {
 
 function TaskItem({ task, onComplete }) {
   const isProject = task.type === 'project';
-  const currentStepName = isProject ? task.steps[task.currentStep] : null;
-  const progress = isProject ? `${task.currentStep + 1}/${task.steps.length}` : null;
+  const currentStepName = isProject ? task.steps[task.current_step] : null;
+  const progress = isProject ? `${task.current_step + 1}/${task.steps.length}` : null;
 
   return (
     <motion.div
@@ -86,7 +86,7 @@ function TaskItem({ task, onComplete }) {
           <div className="w-full h-1.5 bg-gray-200 border border-black mt-1.5">
             <div
               className="h-full bg-miru-blue"
-              style={{ width: `${(task.currentStep / task.steps.length) * 100}%` }}
+              style={{ width: `${(task.current_step / task.steps.length) * 100}%` }}
             />
           </div>
         )}
@@ -95,7 +95,7 @@ function TaskItem({ task, onComplete }) {
       <div className="flex flex-col items-center gap-1 shrink-0">
         <CheckCircle2 size={24} className="text-gray-200 hover:text-quokka-green transition-colors" />
         <span className="text-[9px] font-black text-miru-blue">
-          +{isProject ? (task.currentStep >= task.steps.length - 1 ? '40' : '10') : '25'} EXP
+          +{isProject ? (task.current_step >= task.steps.length - 1 ? '40' : '10') : '25'} EXP
         </span>
       </div>
     </motion.div>

@@ -233,17 +233,17 @@ function QuestCard({ task, onToggle, onDelete, isHabit = false }) {
                 <div
                   key={i}
                   className={`flex items-center gap-2 text-[11px] font-bold py-0.5
-                    ${i < task.currentStep ? 'text-gray-300 line-through' : ''}
-                    ${i === task.currentStep ? 'text-miru-blue' : ''}
+                    ${i < task.current_step ? 'text-gray-300 line-through' : ''}
+                    ${i === task.current_step ? 'text-miru-blue' : ''}
                   `}
                 >
                   <span className={`w-4 h-4 border border-black flex items-center justify-center text-[9px]
-                    ${i < task.currentStep ? 'bg-quokka-green text-white' : i === task.currentStep ? 'bg-miru-blue text-white' : 'bg-gray-100'}`}
+                    ${i < task.current_step ? 'bg-quokka-green text-white' : i === task.current_step ? 'bg-miru-blue text-white' : 'bg-gray-100'}`}
                   >
-                    {i < task.currentStep ? '✓' : i + 1}
+                    {i < task.current_step ? '✓' : i + 1}
                   </span>
                   {step}
-                  {i === task.currentStep && <span className="text-[9px] bg-miru-blue text-white px-1">▶ NOW</span>}
+                  {i === task.current_step && <span className="text-[9px] bg-miru-blue text-white px-1">▶ NOW</span>}
                 </div>
               ))}
             </div>
