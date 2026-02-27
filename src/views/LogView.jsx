@@ -2,12 +2,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useMemo, useState } from 'react';
 import { X, Share } from 'lucide-react';
 
-// iOS 홈 화면 추가 팁 배너
-function InstallTip() {
-  const [dismissed, setDismissed] = useState(
-    () => localStorage.getItem('installTipDismissed') === 'true'
-  );
+// iOS 감지
+const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
 
+// iOS 홈 화면 추가 팁 배너 (iOS에서만 표시)
+function InstallTip() {
+  const [dismissed, setDismissed] = useState(false); // TODO: 테스트 후 localStorage 복구
+
+  if (!isIOS) return null;
   if (dismissed) return null;
 
   const dismiss = () => {
