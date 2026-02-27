@@ -5,30 +5,42 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 // Supabase 내부 fetch 래퍼(Vb)에서 발생하는 "Invalid value" 오류를 디버깅/우회
 const nativeFetch = (url, options = {}) => {
-  // 헤더 검사 및 정리
+  // 원본 options 전체를 로그 (문제 진단용)
+  try {
+    const debugInfo = {
+      urlType: typeof url,
+      urlStr: String(url).substring(0, 100),
+      method: options.method,
+      bodyType: typeof options.body,
+      bodyLen: options.body ? String(options.body).length : 0,
+      hasSignal: !!options.signal,
+      signalAborted: options.signal?.aborted,
+      mode: options.mode,
+      credentials: options.credentials,
+      headers: {}
+    };
+    const rawH = options.headers || {};
+    for (const [k, v] of Object.entries(rawH)) {
+      debugInfo.headers[k] = { type: typeof v, len: String(v).length, val: String(v).substring(0, 30) };
+    }
+    console.log('[nativeFetch debug]', JSON.stringify(debugInfo));
+  } catch (e) {
+    console.log('[nativeFetch debug error]', e.message);
+  }
+
+  // 헤더 정리 및 옵션 전달
   const rawHeaders = options.headers || {};
   const cleanHeaders = {};
   for (const [k, v] of Object.entries(rawHeaders)) {
     if (v !== undefined && v !== null) {
       cleanHeaders[k] = String(v);
-    } else {
-      console.warn('[supabase fetch] 헤더 제거됨:', k, '=', v);
     }
   }
 
-  // 요청 옵션 정리
-  const cleanOptions = {};
-  if (options.method) cleanOptions.method = String(options.method);
-  cleanOptions.headers = cleanHeaders;
+  const cleanOptions = { method: options.method, headers: cleanHeaders };
   if (options.body !== undefined) cleanOptions.body = options.body;
-  if (options.mode) cleanOptions.mode = options.mode;
-  if (options.credentials) cleanOptions.credentials = options.credentials;
-  if (options.cache) cleanOptions.cache = options.cache;
-  if (options.redirect) cleanOptions.redirect = options.redirect;
-  if (options.signal) cleanOptions.signal = options.signal;
 
-  console.log('[supabase fetch]', cleanOptions.method || 'GET', String(url).substring(0, 80));
-  return fetch(url, cleanOptions);
+  return fetch(String(url), cleanOptions);
 };
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
