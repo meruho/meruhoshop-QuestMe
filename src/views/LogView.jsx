@@ -51,11 +51,11 @@ function calcWeeklyStats(logs) {
   let totalCount = 0;
 
   logs.forEach(log => {
-    const ds = new Date(log.completedAt).toDateString();
+    const ds = new Date(log.completed_at).toDateString();
     if (countsByDay[ds] !== undefined) {
       countsByDay[ds]++;
       totalCount++;
-      totalExp += log.expGained || 0;
+      totalExp += log.exp_gained || 0;
     }
   });
 
@@ -117,7 +117,7 @@ export default function LogView({ logs }) {
   const grouped = useMemo(() => {
     const groups = {};
     logs.forEach(log => {
-      const label = dateLabel(log.completedAt);
+      const label = dateLabel(log.completed_at);
       if (!groups[label]) groups[label] = [];
       groups[label].push(log);
     });
@@ -191,8 +191,8 @@ export default function LogView({ logs }) {
                           <p className="text-xs font-black text-pixel-dark truncate">{log.title}</p>
                         </div>
                         <div className="text-right shrink-0">
-                          <div className="text-[9px] text-gray-400 font-bold">{formatTime(log.completedAt)}</div>
-                          <div className="text-[10px] font-black text-exp-orange">+{log.expGained} EXP</div>
+                          <div className="text-[9px] text-gray-400 font-bold">{formatTime(log.completed_at)}</div>
+                          <div className="text-[10px] font-black text-exp-orange">+{log.exp_gained} EXP</div>
                         </div>
                       </div>
                     </motion.div>

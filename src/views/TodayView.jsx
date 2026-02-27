@@ -107,7 +107,7 @@ function EmptyQuest({ message }) {
   return (
     <div className="text-center py-8 opacity-40">
       <div className="text-3xl mb-2">🏖️</div>
-      <p className="text-xs font-black text-gray-500">{message}</p>
+      <p className="text-xs font-black text-gray-500 whitespace-pre-line">{message}</p>
     </div>
   );
 }
@@ -148,7 +148,7 @@ export default function TodayView({ todayHabits, activeTasks, onCompleteHabit, o
                   <HabitItem habit={h} onComplete={() => onCompleteHabit(h.id)} />
                 </div>
               ))
-            : <EmptyQuest message="오늘 습관 퀘스트를 모두 완료했어요! 🎉" />
+            : <EmptyQuest message="습관 퀘스트를 모두 완료했어요~ 🎉" />
           }
         </AnimatePresence>
       </section>
@@ -170,7 +170,7 @@ export default function TodayView({ todayHabits, activeTasks, onCompleteHabit, o
                   <TaskItem task={t} onComplete={() => onCompleteTask(t.id)} />
                 </div>
               ))
-            : <EmptyQuest message="활성 퀘스트가 없어요. FLOW에서 퀘스트를 시작하세요!" />
+            : <EmptyQuest message={"활성 퀘스트가 없어요.\nFLOW에서 퀘스트를 시작하세요."} />
           }
         </AnimatePresence>
       </section>
