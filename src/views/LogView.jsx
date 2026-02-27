@@ -1,5 +1,48 @@
-import { motion } from 'framer-motion';
-import { useMemo } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useMemo, useState } from 'react';
+import { X, Share } from 'lucide-react';
+
+// iOS 홈 화면 추가 팁 배너
+function InstallTip() {
+  const [dismissed, setDismissed] = useState(
+    () => localStorage.getItem('installTipDismissed') === 'true'
+  );
+
+  if (dismissed) return null;
+
+  const dismiss = () => {
+    localStorage.setItem('installTipDismissed', 'true');
+    setDismissed(true);
+  };
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        className="bg-[#FFFDF5] border-2 border-black shadow-[2px_2px_0px_0px_#000] p-3 mb-4 relative"
+      >
+        <button
+          onClick={dismiss}
+          className="absolute top-2 right-2 text-gray-400 hover:text-black"
+        >
+          <X size={12} />
+        </button>
+        <div className="flex items-start gap-2 pr-4">
+          <Share size={14} className="shrink-0 mt-0.5 text-miru-blue" />
+          <div>
+            <p className="text-[10px] font-black text-pixel-dark">📲 앱으로 설치하기</p>
+            <p className="text-[9px] text-gray-500 font-bold mt-0.5">
+              오른쪽 상단 공유 버튼 →<br/>
+              <span className="text-pixel-dark font-black">홈 화면에 추가</span>를 눌러보세요!
+            </p>
+          </div>
+        </div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
 
 // 날짜 포맷팅
 function formatDate(isoStr) {
@@ -136,6 +179,9 @@ export default function LogView({ logs }) {
       transition={{ duration: 0.15 }}
       className="pb-6"
     >
+      {/* 홈 화면 추가 팁 */}
+      <InstallTip />
+
       {/* 주간 통계 */}
       <WeeklyChart logs={logs} />
 
