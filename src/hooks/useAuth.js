@@ -22,12 +22,16 @@ export function useAuth() {
   }, []);
 
   const signInWithGoogle = async () => {
-    await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
         redirectTo: window.location.origin,
       },
     });
+    if (error) {
+      console.error('Google 로그인 에러:', error.message);
+      alert(`로그인 오류: ${error.message}`);
+    }
   };
 
   const signOut = async () => {
