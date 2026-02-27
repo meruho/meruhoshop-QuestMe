@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { LogOut } from 'lucide-react';
+import { LogOut, Download } from 'lucide-react';
 
 const MiruPixel = () => (
   <svg width="32" height="32" viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg" style={{ imageRendering: 'pixelated' }}>
@@ -16,7 +16,7 @@ const MiruPixel = () => (
   </svg>
 );
 
-export default function Header({ level, exp, maxExp, user, onSignOut }) {
+export default function Header({ level, exp, maxExp, user, onSignOut, isInstallable, onInstall }) {
   const expPercent = Math.min((exp / maxExp) * 100, 100);
   const [showMenu, setShowMenu] = useState(false);
 
@@ -82,6 +82,15 @@ export default function Header({ level, exp, maxExp, user, onSignOut }) {
                       <p className="text-[10px] font-black text-gray-400">로그인 중</p>
                       <p className="text-xs font-black text-pixel-dark truncate max-w-[120px]">{displayName}</p>
                     </div>
+                    {isInstallable && (
+                      <button
+                        onClick={() => { setShowMenu(false); onInstall(); }}
+                        className="w-full flex items-center gap-2 px-3 py-2 text-xs font-black text-miru-blue hover:bg-blue-50 transition-colors border-b-2 border-black"
+                      >
+                        <Download size={12} />
+                        앱 설치
+                      </button>
+                    )}
                     <button
                       onClick={() => { setShowMenu(false); onSignOut(); }}
                       className="w-full flex items-center gap-2 px-3 py-2 text-xs font-black text-red-500 hover:bg-red-50 transition-colors"
