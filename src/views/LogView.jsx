@@ -15,6 +15,22 @@ function InstallTip() {
     setDismissed(true);
   };
 
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: '퀘스트마스터',
+          text: '습관을 쌓고, 퀘스트를 클리어하고, 나만의 캐릭터를 성장시키세요!',
+          url: window.location.origin,
+        });
+      } catch (e) {
+        // 사용자가 취소한 경우 무시
+      }
+    }
+  };
+
+  const canShare = !!navigator.share;
+
   return (
     <AnimatePresence>
       <motion.div
@@ -29,15 +45,25 @@ function InstallTip() {
         >
           <X size={12} />
         </button>
-        <div className="flex items-start gap-2 pr-4">
-          <Share size={14} className="shrink-0 mt-0.5 text-miru-blue" />
-          <div>
-            <p className="text-[10px] font-black text-pixel-dark">📲 앱으로 설치하기</p>
-            <p className="text-[9px] text-gray-500 font-bold mt-0.5">
-              오른쪽 상단 공유 버튼 →<br/>
-              <span className="text-pixel-dark font-black">홈 화면에 추가</span>를 눌러보세요!
-            </p>
+        <div className="flex items-center justify-between pr-4">
+          <div className="flex items-start gap-2">
+            <Share size={14} className="shrink-0 mt-0.5 text-miru-blue" />
+            <div>
+              <p className="text-[10px] font-black text-pixel-dark">📲 앱으로 설치하기</p>
+              <p className="text-[9px] text-gray-500 font-bold mt-0.5">
+                공유 → <span className="text-pixel-dark font-black">홈 화면에 추가</span>
+              </p>
+            </div>
           </div>
+          {canShare && (
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-1 bg-miru-blue text-white border-2 border-black px-2 py-1 text-[9px] font-black shadow-[2px_2px_0px_0px_#000] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all shrink-0"
+            >
+              <Share size={10} />
+              공유
+            </button>
+          )}
         </div>
       </motion.div>
     </AnimatePresence>
