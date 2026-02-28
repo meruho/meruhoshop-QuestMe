@@ -1,37 +1,14 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useMemo, useState } from 'react';
-import { X, Share } from 'lucide-react';
+import { useMemo } from 'react';
 
-// iOS 감지
+// PWA / 플랫폼 감지
+const isPWA = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+const isAndroid = /Android/.test(navigator.userAgent);
 
-// iOS 홈 화면 추가 팁 배너 (iOS에서만 표시)
+// 앱 설치 안내 배너 (웹브라우저일 때만 표시)
 function InstallTip() {
-  const [dismissed, setDismissed] = useState(false); // TODO: 테스트 후 localStorage 복구
-
-  if (!isIOS) return null;
-  if (dismissed) return null;
-
-  const dismiss = () => {
-    localStorage.setItem('installTipDismissed', 'true');
-    setDismissed(true);
-  };
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: '퀘스트마스터',
-          text: '습관을 쌓고, 퀘스트를 클리어하고, 나만의 캐릭터를 성장시키세요!',
-          url: window.location.origin,
-        });
-      } catch (e) {
-        // 사용자가 취소한 경우 무시
-      }
-    }
-  };
-
-  const canShare = !!navigator.share;
+  if (isPWA) return null;
 
   return (
     <AnimatePresence>
@@ -39,33 +16,32 @@ function InstallTip() {
         initial={{ opacity: 0, y: -8 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -8 }}
-        className="bg-[#FFFDF5] border-2 border-black shadow-[2px_2px_0px_0px_#000] p-3 mb-4 relative"
+        className="bg-[#FFFDF5] border-2 border-black shadow-[2px_2px_0px_0px_#000] p-3 mb-4"
       >
-        <button
-          onClick={dismiss}
-          className="absolute top-2 right-2 text-gray-400 hover:text-black"
-        >
-          <X size={12} />
-        </button>
-        <div className="flex items-center justify-between pr-4">
-          <div className="flex items-start gap-2">
-            <Share size={14} className="shrink-0 mt-0.5 text-miru-blue" />
-            <div>
-              <p className="text-[10px] font-black text-pixel-dark">📲 앱으로 설치하기</p>
+        <div className="flex items-start gap-2">
+          <span className="text-sm shrink-0">📲</span>
+          <div>
+            <p className="text-[10px] font-black text-pixel-dark">앱으로 설치하기</p>
+            {isIOS ? (
+              <>
+                <p className="text-[9px] text-gray-500 font-bold mt-0.5">
+                  Safari 하단 <span className="text-pixel-dark font-black">⬆ 공유 버튼</span> 누른 후
+                </p>
+                <p className="text-[9px] text-gray-500 font-bold">
+                  → <span className="text-pixel-dark font-black">홈 화면에 추가</span> 선택
+                </p>
+              </>
+            ) : isAndroid ? (
               <p className="text-[9px] text-gray-500 font-bold mt-0.5">
-                공유 → <span className="text-pixel-dark font-black">홈 화면에 추가</span>
+                Chrome 메뉴(<span className="text-pixel-dark font-black">⋮</span>)에서{' '}
+                <span className="text-pixel-dark font-black">홈 화면에 추가</span> 선택
               </p>
-            </div>
+            ) : (
+              <p className="text-[9px] text-gray-500 font-bold mt-0.5">
+                주소창 오른쪽 <span className="text-pixel-dark font-black">설치 버튼</span>을 눌러 설치하세요
+              </p>
+            )}
           </div>
-          {canShare && (
-            <button
-              onClick={handleShare}
-              className="flex items-center gap-1 bg-miru-blue text-white border-2 border-black px-2 py-1 text-[9px] font-black shadow-[2px_2px_0px_0px_#000] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all shrink-0"
-            >
-              <Share size={10} />
-              공유
-            </button>
-          )}
         </div>
       </motion.div>
     </AnimatePresence>

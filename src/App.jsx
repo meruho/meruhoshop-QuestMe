@@ -13,7 +13,6 @@ import AuthView from './views/AuthView';
 
 import { useAuth } from './hooks/useAuth';
 import { useGameState } from './hooks/useGameState';
-import { useInstallPrompt } from './hooks/useInstallPrompt';
 
 // 픽셀 로딩 스피너
 function LoadingScreen() {
@@ -36,8 +35,6 @@ export default function App() {
   const [activeTab, setActiveTab] = useState(TABS.TODAY);
   const [levelUpInfo, setLevelUpInfo] = useState(null);
   const { toasts, showToast } = useExpToast();
-  const { isInstallable, install } = useInstallPrompt();
-
   const {
     state,
     isLoading: dataLoading,
@@ -92,8 +89,6 @@ export default function App() {
           maxExp={maxExp}
           user={user}
           onSignOut={signOut}
-          isInstallable={isInstallable}
-          onInstall={install}
         />
 
         {/* 메인 컨텐츠 */}
