@@ -26,7 +26,7 @@ export default function Header({ level, exp, maxExp, user, onSignOut }) {
   const initial = displayName.charAt(0).toUpperCase();
 
   return (
-    <header className="bg-[#FFFDF5] border-b-4 border-black px-4 pt-6 pb-3">
+    <header className="bg-[#FFFDF5] border-b-4 border-black px-4 pt-3 pb-3">
       <div className="flex items-center justify-between mb-2">
         {/* 로고 + 캐릭터 */}
         <div className="flex items-center gap-2">
