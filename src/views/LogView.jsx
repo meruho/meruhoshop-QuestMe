@@ -71,7 +71,7 @@ function InstallTip() {
             </button>
           )}
 
-          {isAndroid && deferredPrompt && (
+          {isAndroid && (
             <button
               onClick={handleAndroidInstall}
               className="shrink-0 bg-miru-blue text-white border-2 border-black px-2 py-1 text-[9px] font-black shadow-[2px_2px_0px_0px_#000] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all"
