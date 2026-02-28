@@ -53,7 +53,7 @@ function InstallTip() {
           </div>
         ) : (
           <div className="flex items-center justify-between gap-2">
-            <p className="text-[12px] font-black text-pixel-dark">
+            <p className="text-[10px] font-black text-pixel-dark">
               📲 웹앱 설치하기
               {isIOS && <span className="text-gray-500 font-bold"> 오른쪽 위 <span className="text-pixel-dark">⬆</span> → 홈 화면에 추가</span>}
               {isAndroid && <span className="text-gray-500 font-bold"> 오른쪽 위 <MoreVertical size={10} className="inline-block align-middle" /> → 홈 화면에 추가</span>}
