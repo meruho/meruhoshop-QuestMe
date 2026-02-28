@@ -27,13 +27,6 @@ function InstallTip() {
     deferredPrompt = null;
   };
 
-  const handleIOSShare = async () => {
-    if (!navigator.share) return;
-    try {
-      await navigator.share({ title: '퀘스트마스터', url: window.location.origin });
-    } catch (e) {}
-  };
-
   return (
     <AnimatePresence>
       <motion.div
@@ -48,9 +41,14 @@ function InstallTip() {
             <div>
               <p className="text-[10px] font-black text-pixel-dark">웹앱으로 설치하기</p>
               {isIOS ? (
-                <p className="text-[9px] text-gray-500 font-bold mt-0.5">
-                  공유 버튼 → <span className="text-pixel-dark font-black">홈 화면에 추가</span>
-                </p>
+                <>
+                  <p className="text-[9px] text-gray-500 font-bold mt-0.5">
+                    오른쪽 위 <span className="text-pixel-dark font-black">⬆ 공유 아이콘</span> 클릭
+                  </p>
+                  <p className="text-[9px] text-gray-500 font-bold">
+                    → <span className="text-pixel-dark font-black">홈 화면에 추가</span> 선택
+                  </p>
+                </>
               ) : (
                 <p className="text-[9px] text-gray-500 font-bold mt-0.5">
                   Chrome 메뉴 → <span className="text-pixel-dark font-black">홈 화면에 추가</span>
@@ -58,15 +56,6 @@ function InstallTip() {
               )}
             </div>
           </div>
-
-          {isIOS && (
-            <button
-              onClick={handleIOSShare}
-              className="shrink-0 bg-miru-blue text-white border-2 border-black px-2 py-1 text-[9px] font-black shadow-[2px_2px_0px_0px_#000] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all"
-            >
-              ⬆ 공유
-            </button>
-          )}
 
           {isAndroid && (
             <button
