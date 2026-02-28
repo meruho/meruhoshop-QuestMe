@@ -138,7 +138,7 @@ export default function TodayView({ todayHabits, activeTasks, onCompleteHabit, o
             🔥 오늘의 습관
           </span>
           <span className="text-[10px] text-gray-400 font-bold">
-            {todayHabits.length}개 남음
+            {/* {todayHabits.length}개 남음 */}
           </span>
         </div>
         <AnimatePresence mode="popLayout">
@@ -160,7 +160,7 @@ export default function TodayView({ todayHabits, activeTasks, onCompleteHabit, o
             ⚔️ 활성 퀘스트
           </span>
           <span className="text-[10px] text-gray-400 font-bold">
-            {activeTasks.length}개
+            {/* {activeTasks.length}개 */}
           </span>
         </div>
         <AnimatePresence mode="popLayout">
