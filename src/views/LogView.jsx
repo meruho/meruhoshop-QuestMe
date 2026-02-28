@@ -9,6 +9,7 @@ const isAndroid = /Android/.test(navigator.userAgent);
 // 앱 설치 안내 배너 (웹브라우저일 때만 표시)
 function InstallTip() {
   if (isPWA) return null;
+  if (!isIOS && !isAndroid) return null;
 
   return (
     <AnimatePresence>
