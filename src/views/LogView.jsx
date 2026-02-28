@@ -1,25 +1,22 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo } from 'react';
 
 // PWA / 플랫폼 감지
 const isPWA = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
 const isAndroid = /Android/.test(navigator.userAgent);
 
+// 모듈 로드 시 즉시 등록 — beforeinstallprompt는 페이지 초기에 한 번만 발생
+let deferredPrompt = null;
+if (isAndroid && !isPWA) {
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+}
+
 // 앱 설치 안내 배너 (모바일 웹브라우저일 때만 표시)
 function InstallTip() {
-  const [deferredPrompt, setDeferredPrompt] = useState(null);
-
-  useEffect(() => {
-    if (!isAndroid) return;
-    const handler = (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    };
-    window.addEventListener('beforeinstallprompt', handler);
-    return () => window.removeEventListener('beforeinstallprompt', handler);
-  }, []);
-
   if (isPWA) return null;
   if (!isIOS && !isAndroid) return null;
 
@@ -27,7 +24,7 @@ function InstallTip() {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
     await deferredPrompt.userChoice;
-    setDeferredPrompt(null);
+    deferredPrompt = null;
   };
 
   const handleIOSShare = async () => {
