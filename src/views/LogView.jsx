@@ -49,7 +49,7 @@ function InstallTip() {
           <div className="flex items-start gap-2 flex-1 min-w-0">
             <span className="text-sm shrink-0">📲</span>
             <div>
-              <p className="text-[10px] font-black text-pixel-dark">앱으로 설치하기</p>
+              <p className="text-[10px] font-black text-pixel-dark">웹앱으로 설치하기</p>
               {isIOS ? (
                 <p className="text-[9px] text-gray-500 font-bold mt-0.5">
                   공유 버튼 → <span className="text-pixel-dark font-black">홈 화면에 추가</span>
