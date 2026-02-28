@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 // PWA / 플랫폼 감지
 const isPWA = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
@@ -17,14 +17,17 @@ if (isAndroid && !isPWA) {
 
 // 앱 설치 안내 배너 (모바일 웹브라우저일 때만 표시)
 function InstallTip() {
+  const [installed, setInstalled] = useState(false);
+
   if (isPWA) return null;
   if (!isIOS && !isAndroid) return null;
 
   const handleAndroidInstall = async () => {
     if (!deferredPrompt) return;
     deferredPrompt.prompt();
-    await deferredPrompt.userChoice;
+    const { outcome } = await deferredPrompt.userChoice;
     deferredPrompt = null;
+    if (outcome === 'accepted') setInstalled(true);
   };
 
   return (
@@ -35,37 +38,49 @@ function InstallTip() {
         exit={{ opacity: 0, y: -8 }}
         className="bg-[#FFFDF5] border-2 border-black shadow-[2px_2px_0px_0px_#000] p-3 mb-4"
       >
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-start gap-2 flex-1 min-w-0">
-            <span className="text-sm shrink-0">📲</span>
+        {installed ? (
+          <div className="flex items-center gap-2">
+            <span className="text-sm">✅</span>
             <div>
-              <p className="text-[10px] font-black text-pixel-dark">웹앱으로 설치하기</p>
-              {isIOS ? (
-                <>
-                  <p className="text-[9px] text-gray-500 font-bold mt-0.5">
-                    오른쪽 위 <span className="text-pixel-dark font-black">⬆ 공유 아이콘</span> 클릭
-                  </p>
-                  <p className="text-[9px] text-gray-500 font-bold">
-                    → <span className="text-pixel-dark font-black">홈 화면에 추가</span> 선택
-                  </p>
-                </>
-              ) : (
-                <p className="text-[9px] text-gray-500 font-bold mt-0.5">
-                  Chrome 메뉴 → <span className="text-pixel-dark font-black">홈 화면에 추가</span>
-                </p>
-              )}
+              <p className="text-[10px] font-black text-pixel-dark">설치 완료!</p>
+              <p className="text-[9px] text-gray-500 font-bold mt-0.5">
+                홈화면 아이콘을 눌러 실행하세요
+              </p>
             </div>
           </div>
+        ) : (
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-start gap-2 flex-1 min-w-0">
+              <span className="text-sm shrink-0">📲</span>
+              <div>
+                <p className="text-[10px] font-black text-pixel-dark">웹앱으로 설치하기</p>
+                {isIOS ? (
+                  <>
+                    <p className="text-[9px] text-gray-500 font-bold mt-0.5">
+                      오른쪽 위 <span className="text-pixel-dark font-black">⬆ 공유 아이콘</span> 클릭
+                    </p>
+                    <p className="text-[9px] text-gray-500 font-bold">
+                      → <span className="text-pixel-dark font-black">홈 화면에 추가</span> 선택
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-[9px] text-gray-500 font-bold mt-0.5">
+                    Chrome 메뉴 → <span className="text-pixel-dark font-black">홈 화면에 추가</span>
+                  </p>
+                )}
+              </div>
+            </div>
 
-          {isAndroid && (
-            <button
-              onClick={handleAndroidInstall}
-              className="shrink-0 bg-miru-blue text-white border-2 border-black px-2 py-1 text-[9px] font-black shadow-[2px_2px_0px_0px_#000] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all"
-            >
-              설치
-            </button>
-          )}
-        </div>
+            {isAndroid && (
+              <button
+                onClick={handleAndroidInstall}
+                className="shrink-0 bg-miru-blue text-white border-2 border-black px-2 py-1 text-[9px] font-black shadow-[2px_2px_0px_0px_#000] active:shadow-none active:translate-x-0.5 active:translate-y-0.5 transition-all"
+              >
+                설치
+              </button>
+            )}
+          </div>
+        )}
       </motion.div>
     </AnimatePresence>
   );
