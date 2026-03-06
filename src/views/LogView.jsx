@@ -234,16 +234,16 @@ export default function LogView({ logs }) {
           {grouped.map(([dateLabel, dayLogs]) => (
             <div key={dateLabel}>
               {/* 날짜 구분 */}
-              <div className="flex items-center gap-2 mb-3">
+              <div className="flex items-center mb-3">
                 <div className="h-px flex-1 bg-black" />
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[10px] font-black bg-pixel-dark text-white px-2 py-0.5">
-                    {dateLabel}
-                  </span>
-                  <span className="text-[9px] font-black text-gray-400">{dayLogs.length}개</span>
-                  <span className="text-[9px] font-black text-exp-orange">+{dayLogs.reduce((s, l) => s + (l.exp_gained || 0), 0)}EXP</span>
+                <span className="text-[10px] font-black bg-pixel-dark text-white px-2 py-0.5 mx-2">
+                  {dateLabel}
+                </span>
+                <div className="flex-1 flex items-center gap-2">
+                  <div className="h-px flex-1 bg-black" />
+                  <span className="text-[9px] font-black text-gray-400 shrink-0">✅ {dayLogs.length}개</span>
+                  <span className="text-[9px] font-black text-exp-orange shrink-0">⚡ +{dayLogs.reduce((s, l) => s + (l.exp_gained || 0), 0)}</span>
                 </div>
-                <div className="h-px flex-1 bg-black" />
               </div>
 
               {/* 타임라인 */}
