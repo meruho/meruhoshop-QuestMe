@@ -241,7 +241,7 @@ export default function LogView({ logs }) {
                 </span>
                 <div className="flex-1 flex items-center gap-1">
                   <div className="h-px flex-1 bg-black" />
-                  <span className="text-[10px] font-bold text-gray-500 shrink-0">{dayLogs.length} 개 / </span>
+                  <span className="text-[10px] font-bold text-gray-500 shrink-0">{dayLogs.length} 개 (੭˙ ˘ ˙)੭</span>
                   <span className="text-[10px] font-bold text-gray-500 shrink-0">+{dayLogs.reduce((s, l) => s + (l.exp_gained || 0), 0)} EXP</span>
                 </div>
               </div>
