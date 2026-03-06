@@ -213,7 +213,7 @@ export default function LogView({ logs }) {
       <InstallTip />
 
       {/* 주간 통계 */}
-      <WeeklyChart logs={logs} />
+      {/* <WeeklyChart logs={logs} /> */}
 
       {/* 완료 기록 타임라인 */}
       <div className="flex items-center gap-2 mb-4">
@@ -236,9 +236,13 @@ export default function LogView({ logs }) {
               {/* 날짜 구분 */}
               <div className="flex items-center gap-2 mb-3">
                 <div className="h-px flex-1 bg-black" />
-                <span className="text-[10px] font-black bg-pixel-dark text-white px-2 py-0.5">
-                  {dateLabel}
-                </span>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-[10px] font-black bg-pixel-dark text-white px-2 py-0.5">
+                    {dateLabel}
+                  </span>
+                  <span className="text-[9px] font-black text-gray-400">{dayLogs.length}개</span>
+                  <span className="text-[9px] font-black text-exp-orange">+{dayLogs.reduce((s, l) => s + (l.exp_gained || 0), 0)}EXP</span>
+                </div>
                 <div className="h-px flex-1 bg-black" />
               </div>
 

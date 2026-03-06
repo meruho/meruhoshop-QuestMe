@@ -44,11 +44,26 @@ export function useGameState(userId) {
           .map(c => c.completed_date),
       }));
 
+      // 자정 기준 일일 퀘스트 초기화
+      const today = todayStr();
+      const lastReset = localStorage.getItem('lastDailyReset');
+      let tasks = tasksRes.data || [];
+      if (lastReset !== today) {
+        const toReset = tasks.filter(t => t.status === 'active');
+        if (toReset.length > 0) {
+          await supabase.from('tasks')
+            .update({ status: 'paused' })
+            .in('id', toReset.map(t => t.id));
+          tasks = tasks.map(t => t.status === 'active' ? { ...t, status: 'paused' } : t);
+        }
+        localStorage.setItem('lastDailyReset', today);
+      }
+
       setState({
         level: profile.level,
         exp: profile.exp,
         habits,
-        tasks: tasksRes.data || [],
+        tasks,
         logs: logsRes.data || [],
       });
     } catch (e) {

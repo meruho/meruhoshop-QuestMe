@@ -105,7 +105,7 @@ function TaskItem({ task, onComplete }) {
 // 빈 상태
 function EmptyQuest({ message }) {
   return (
-    <div className="text-center py-8 opacity-40">
+    <div className="text-center py-4 opacity-40">
       <div className="text-3xl mb-2">🏖️</div>
       <p className="text-xs font-black text-gray-500 whitespace-pre-line">{message}</p>
     </div>
