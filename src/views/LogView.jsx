@@ -216,9 +216,9 @@ export default function LogView({ logs }) {
       {/* <WeeklyChart logs={logs} /> */}
 
       {/* 완료 기록 타임라인 */}
-      <div className="flex items-center gap-2 mb-4">
-        <span className="text-xs font-black bg-black text-white px-2 py-0.5">📜 완료 기록</span>
-        <span className="text-[10px] text-gray-400 font-bold">총 {logs.length}개</span>
+      <div className="mb-4">
+        <h2 className="text-base font-black text-pixel-dark">📜 완료 기록</h2>
+        <p className="text-[10px] text-gray-500 font-bold">총 {logs.length}개의 역사</p>
       </div>
 
       {logs.length === 0 ? (
